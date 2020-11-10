@@ -10,9 +10,18 @@ const urlDatabase = {
 
 app.set("view engine", "ejs");
 
- app.get("/fetch", (req, res) => {
-  res.send(`a = ${a}`);
- });
+app.get("/urls", (req, res) => {
+  const templateVars = { urls: urlDatabase };
+  console.log(templateVars);
+  res.render("urls_index", templateVars);
+});
+
+app.get("/urls/:shortURL", (req, res) => {
+  console.log(req);
+  const templateVars = { shortURL: req.params.shortURL, longURL: req.originalUrl};
+  res.render("urls_show", templateVars);
+});
+
 
 app.get("/", (req, res) => {
   res.send("Hello!");
