@@ -13,5 +13,21 @@ const generateRandomString = () => {
 const deleteitem = (url,data) => {
   delete data[url];
 };
+const validateEmail = (data, email) => {
+  if (!email) return false;
+  for (const id in data) {
+    if (data[id].email === email) {
+      return false;
+    }
+  }
+  return true;
+};
+const logincheck = (req,data) => {
+  for (const id in data) {
+    if (id  === req.cookies[`user_id`]) {
+      return id;
+    }
+  }
+};
 
-module.exports = {generateRandomString,deleteitem};
+module.exports = {generateRandomString,deleteitem,validateEmail,logincheck};
