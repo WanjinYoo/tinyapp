@@ -8,11 +8,13 @@ TinyApp is a full stack web application built with Node and Express that allows 
   **CreateURL page**
 !["CreateURL Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/CreateURL.png)
  **Register Page**
-!["CreateURL Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/Register.png)
+!["Register Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/Register.png)
  **Login page**
-!["CreateURL Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/Login.png)
+!["Login Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/Login.png)
+ **Edit page**
+!["Edit Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/editpage.png)
  **CreateURLpage When a URL has been created**
-!["CreateURL Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/URLpage.png)
+!["CreateURL Page2"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/URLpage.png)
   **Main page When a URL has been created**
 !["Main Page2"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/Mainpage2.png)
 
