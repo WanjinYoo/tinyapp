@@ -28,6 +28,16 @@ const logincheck = (req,data) => {
       return id;
     }
   }
+  return "";
+};
+const urlsForUser = (data,id) => {
+  const userurls = {};
+  for (const shorturl in data) {
+    if (data[shorturl].userID === id) {
+      userurls[shorturl] = data[shorturl];
+    }
+  }
+  return userurls;
 };
 
-module.exports = {generateRandomString,deleteitem,validateEmail,logincheck};
+module.exports = {generateRandomString,deleteitem,validateEmail,logincheck,urlsForUser};

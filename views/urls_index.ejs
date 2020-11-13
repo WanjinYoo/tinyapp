@@ -10,9 +10,21 @@
 </head>
 <body>
   <%- include('partials/_header') %>
-  <main style="margin: 1em;">
-    <h3>My URLs</h3>
-    <table class="table">
+    <% if (!login) {%>
+      <div class="jumbotron">
+        <h1 class="display-4">Welcome to TinyApp!</h1>
+        <p class="lead">Please Login to your account to create short URLS!</p>
+        <hr class="my-4">
+        <p class="lead">
+        <p>Click the button below to Sign up or Sign in</p>
+          <a class="btn btn-outline-success btn-lg" href="/register" role="button">Sign up</a>
+          <a class="btn btn-outline-success btn-lg" href="/login" role="button">Sign in</a>
+        </p>
+      </div>
+    <% } else { %>
+      <main style="margin: 1em;">
+      <h3>My URLs</h3>
+      <table class="table">
       <thead>
         <tr>
           <th scope="col">Short URL</th>
@@ -25,7 +37,7 @@
         <% for(let url in urls) { %>
           <tr>
             <td><%= url %></td>
-            <td><%= urls[url] %></td>
+            <td><%= urls[url].longURL %></td>
             <td><form method="GET" action="/urls/<%= url %>">
               <input type = "submit" class="btn btn-outline-primary" value="Edit"/>
             </form></td>
@@ -38,6 +50,7 @@
         <% } %>
       </tbody>
     </table>
+    <% } %>
   </main>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
