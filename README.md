@@ -14,7 +14,7 @@ TinyApp is a full stack web application built with Node and Express that allows 
  **CreateURLpage When a URL has been created**
 !["CreateURL Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/URLpage.png)
   **Main page When a URL has been created**
-!["Main Page"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/MainPage2.png)
+!["Main Page2"](https://github.com/WanjinYoo/tinyapp/blob/master/docs/Mainpage2.png)
 
 ## Dependencies
 
