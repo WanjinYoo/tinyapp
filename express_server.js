@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
+const methodOverride = require('method-override');
 const app = express();
 const {generateRandomString,deleteitem,validateEmail,logincheck,urlsForUser,getUserByEmail} = require("./script/helper");
 const PORT = 8080; // default port 8080
@@ -13,6 +14,8 @@ app.use(cookieSession({
   keys: [`1`]
 }));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(methodOverride('_method'));
 // Create URL page
 app.get("/urls/new", (req, res) => {
   const templateVars = {};
@@ -125,7 +128,7 @@ app.post("/urls", (req, res) => {
   }
 });
 // Edit
-app.post("/urls/:id", (req, res) => {
+app.put("/urls/:id", (req, res) => {
   if (urlDatabase[req.params.id].userID !== req.session.user_id) {
     return res.redirect(`/urls`);
   }
@@ -134,7 +137,7 @@ app.post("/urls/:id", (req, res) => {
   
 });
 //Delete
-app.post("/urls/:shortURL/delete", (req, res) => {
+app.delete("/urls/:shortURL/delete", (req, res) => {
 
   if (urlDatabase[req.params.shortURL].userID !== req.session.user_id) {
     return res.redirect(`/urls`);

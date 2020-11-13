@@ -25,7 +25,7 @@
 <% if (belong === true) { %>
   <div style = "text-align:center" class="jumbotron">
     <h3> Edit Your Long Urls</h3>
-    <form class="justify-content-center form-inline" action="/urls/<%= shortURL %>" method="POST">
+    <form class="justify-content-center form-inline" action="/urls/<%= shortURL %>?_method=PUT" method="POST">
       <label for="newURL">Enter a New URL:</label>
       <input class="form-control" type="text" name="newURL" placeholder="http://" style="width: 300px; margin: 1em">
         <button type="submit" class="btn btn-primary">Submit</button>
