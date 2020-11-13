@@ -8,6 +8,7 @@ const {generateRandomString,deleteitem,validateEmail,logincheck,urlsForUser,getU
 const PORT = 8080; // default port 8080
 const urlDatabase = {};
 const user = {};
+const track = {};
 app.set("view engine", "ejs");
 app.use(cookieSession({
   name: 'session',
@@ -28,16 +29,41 @@ app.get("/urls/:shortURL", (req, res) => {
   const id = req.session.user_id;
   let belong = true;
   //Send an error if a user type in undefined url
-  req.session.visits += 1;
+  if (!req.session[req.params.shortURL]) {
+    req.session[req.params.shortURL] = 1;
+  } else {
+    req.session[req.params.shortURL] += 1;
+  }
+  
+  
   if (urlDatabase[req.params.shortURL] === undefined) return res.send(`invalid URL`);
   else if (urlDatabase[req.params.shortURL].userID !== id) {
     belong = false;
   }
+  let date = new Date();
+  if (req.session.user_id) {
+    if (!Object.keys(track).includes(req.params.shortURL)) {
+      track[req.params.shortURL] = {};
+      track[req.params.shortURL][`user`] = [];
+      track[req.params.shortURL][`time`] = [];
+    }
+    track[req.params.shortURL][`user`].push(req.session.user_id);
+    track[req.params.shortURL][`time`].push(date.toLocaleString());
+  }
+  // Use filter to find unique visits filter out duplicates
+  const uniq = track[req.params.shortURL][`user`]
+    .filter((item,index) => {
+      return track[req.params.shortURL][`user`].indexOf(item) === index;
+    })
+    .length;
   const templateVars = {
     shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.shortURL].longURL,
     time : urlDatabase[req.params.shortURL].time,
-    visits : req.session.visits,
+    visits : req.session[req.params.shortURL],
+    timeStamp : track[req.params.shortURL][`time`],
+    user : track[req.params.shortURL][`user`],
+    uniqvisits : uniq,
     belong,
   };
   const match = logincheck(req,user);
@@ -96,12 +122,12 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   if (validateEmail(user,req.body.email)) {
     const id = generateRandomString();
+    if (!req.body.password) return res.status(400).send('Please Enter password');
     user[id] = {
       id : id,
       email : req.body.email,
       password :  bcrypt.hashSync(req.body.password, 10)
     };
-    
     req.session.user_id = id;
     res.redirect("/urls");
   } else res.status(400).send('Invalid Email');
@@ -117,13 +143,11 @@ app.post("/urls", (req, res) => {
     return res.redirect(`/login`);
   } else {
     const x = generateRandomString();
-    const date = new Date();
-    date.setHours(-4);
+    let date = new Date();
     urlDatabase[x] = {};
     urlDatabase[x].longURL = req.body.longURL;
     urlDatabase[x].userID = req.session.user_id;
     urlDatabase[x].time = date.toLocaleString();
-    console.log(urlDatabase[x].time);
     res.redirect(`urls/${x}`);
   }
 });
@@ -145,7 +169,7 @@ app.delete("/urls/:shortURL/delete", (req, res) => {
   deleteitem(req.params.shortURL,urlDatabase);
   res.redirect(`/urls`);
 });
-//Check if the server is running properly
+//
 app.get("/", (req, res) => {
   if (!req.session.user_id) return res.redirect(`/login`);
   else {
