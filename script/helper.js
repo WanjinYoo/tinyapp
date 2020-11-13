@@ -13,6 +13,7 @@ const generateRandomString = () => {
 const deleteitem = (url,data) => {
   delete data[url];
 };
+//For resgistration, returns false if Email exists in the database
 const validateEmail = (data, email) => {
   if (!email) return false;
   for (const id in data) {
@@ -24,7 +25,7 @@ const validateEmail = (data, email) => {
 };
 const logincheck = (req,data) => {
   for (const id in data) {
-    if (id  === req.cookies[`user_id`]) {
+    if (id  === req.session.user_id) {
       return id;
     }
   }
@@ -39,5 +40,12 @@ const urlsForUser = (data,id) => {
   }
   return userurls;
 };
+const getUserByEmail = function(email, database) {
+  for (const id in database) {
+    if (database[id].email === email) {
+      return id;
+    }
+  }
+};
 
-module.exports = {generateRandomString,deleteitem,validateEmail,logincheck,urlsForUser};
+module.exports = {generateRandomString,deleteitem,validateEmail,logincheck,urlsForUser,getUserByEmail};
