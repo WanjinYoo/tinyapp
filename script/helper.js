@@ -10,7 +10,7 @@ const generateRandomString = () => {
   }
   return s;
 };
-const deleteitem = (url,data) => {
+const deleteItem = (url, data) => {
   delete data[url];
 };
 //For resgistration, returns false if Email exists in the database
@@ -23,15 +23,15 @@ const validateEmail = (data, email) => {
   }
   return true;
 };
-const logincheck = (req,data) => {
+const loginCheck = (req, data) => {
   for (const id in data) {
-    if (id  === req.session.user_id) {
+    if (id === req.session.user_id) {
       return id;
     }
   }
   return "";
 };
-const urlsForUser = (data,id) => {
+const urlsForUser = (data, id) => {
   const userurls = {};
   for (const shorturl in data) {
     if (data[shorturl].userID === id) {
@@ -48,4 +48,4 @@ const getUserByEmail = function(email, database) {
   }
 };
 
-module.exports = {generateRandomString,deleteitem,validateEmail,logincheck,urlsForUser,getUserByEmail};
+module.exports = { generateRandomString, deleteItem, validateEmail, loginCheck, urlsForUser, getUserByEmail };

@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 
-const {deleteitem,validateEmail,getUserByEmail} = require("../script/helper");
+const {deleteItem,validateEmail,getUserByEmail} = require("../script/helper");
 
 const testUsers = {
   "userRandomID": {
@@ -43,9 +43,9 @@ describe('getUserByEmail', function() {
     // Write your assert statement here
   });
 });
-describe('Deleteitem', function() {
+describe('deleteItem', function() {
   it('should delete item', function() {
-    deleteitem("userRandomID",testUsers);
+    deleteItem("userRandomID",testUsers);
     const actual = Object.keys(testUsers).length;
     const expectedOutput = 1;
     assert.strictEqual(actual,expectedOutput);
